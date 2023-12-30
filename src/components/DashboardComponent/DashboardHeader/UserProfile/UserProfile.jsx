@@ -1,10 +1,12 @@
+"use client";
+
 import useStore from "@/store/store";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillPersonCheckFill } from "react-icons/bs";
-import { FaUsers } from "react-icons/fa6";
+import { FaUserPlus, FaUsers } from "react-icons/fa6";
 import { RiDashboardFill } from "react-icons/ri";
 import { TfiClose } from "react-icons/tfi";
 
@@ -12,6 +14,29 @@ const UserProfile = () => {
   const { closeDashboardHeaderMenu } = useStore((state) => state);
   const router = useRouter();
   const session = useSession();
+  const userEmail = session?.data?.user?.email;
+
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`/api/user?userEmail=${userEmail}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+        console.log("User Data: ", data);
+        console.log("User Role: ", data.roles[0]);
+        setUserRole(data.roles[0]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserData();
+  }, [userEmail]);
 
   const userProfileData = [
     {
@@ -22,14 +47,24 @@ const UserProfile = () => {
       iconColor: "#03C9D7",
       iconBg: "#E5FAFB",
     },
-    // {
-    //   icon: <FaUsers />,
-    //   title: "All Users",
-    //   desc: "Show all Users",
-    //   path: "/dashboard/allusers",
-    //   iconColor: "rgb(0, 194, 146)",
-    //   iconBg: "rgb(235, 250, 242)",
-    // },
+    {
+      icon: <FaUserPlus />,
+      title: "Add User",
+      desc: "Add User, HR, or Admin",
+      path: "/dashboard/adduser",
+      iconColor: "rgb(0, 194, 46)",
+      iconBg: "rgb(235, 250, 242)",
+      condition: userRole === "admin",
+    },
+    {
+      icon: <FaUsers />,
+      title: "All Users",
+      desc: "Show all Users",
+      path: "/dashboard/allusers",
+      iconColor: "rgb(0, 194, 146)",
+      iconBg: "rgb(235, 250, 242)",
+      condition: userRole === "admin" || userRole === "hr",
+    },
     {
       icon: <BsFillPersonCheckFill />,
       title: "My Profile",
@@ -37,6 +72,7 @@ const UserProfile = () => {
       path: "/dashboard/myprofile",
       iconColor: "#03C9D7",
       iconBg: "#E5FAFB",
+      // No condition property, so it will be shown for all users
     },
   ];
 
@@ -44,6 +80,7 @@ const UserProfile = () => {
     closeDashboardHeaderMenu();
     router.push(item.path);
   };
+
   return (
     <div className="absolute right-1 top-16 bg-white  p-8 rounded-lg w-96">
       <div className="flex justify-between items-center">
@@ -66,13 +103,13 @@ const UserProfile = () => {
         />
         <div>
           <p className="font-semibold text-xl dark:text-gray-200">
-          {session?.data?.user.name.split(" ").pop()}
+            {session?.data?.user.name.split(" ").pop()}
           </p>
-          {/* <p className="text-gray-500 text-sm dark:text-gray-400">
-            Software Engineer
-          </p> */}
           <p className="text-gray-500 text-sm font-semibold dark:text-gray-400">
-          {session?.data?.user.email}
+            {session?.data?.user.email}
+          </p>
+          <p className="text-blue-500 text-sm font-semibold dark:text-gray-400">
+            {userRole}
           </p>
         </div>
       </div>
@@ -80,7 +117,13 @@ const UserProfile = () => {
         {userProfileData.map((item, index) => (
           <div
             key={index}
-            className="flex gap-5 border-b border-gray-100 p-4 hover:bg-gray-50 cursor-pointer  dark:hover:bg-[#42464D]"
+            className={`flex gap-5 border-b border-gray-100 p-4 hover:bg-gray-50 cursor-pointer  dark:hover:bg-[#42464D] ${
+              item.condition !== undefined
+                ? item.condition
+                  ? ""
+                  : "hidden"
+                : ""
+            }`}
             onClick={() => handlenavigate(item)}
           >
             <div
@@ -102,7 +145,6 @@ const UserProfile = () => {
       <div className="mt-5">
         <button
           className="text-xl text-white bg-red-500 hover:bg-red-600 py-3 w-full rounded-lg"
-          // to set dashboardMenuInitialState means all state will be false
           onClick={() => {
             closeDashboardHeaderMenu();
             signOut();
