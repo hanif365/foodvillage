@@ -58,9 +58,7 @@ const AddUser = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(
-          `/api/user?userId=${userId}`
-        );
+        const response = await fetch(`/api/user?userId=${userId}`);
         if (response.ok) {
           const userData = await response.json();
           console.log("Fetched user data", userData);
@@ -217,9 +215,7 @@ const AddUser = () => {
         <div className="w-full space-y-8 mx-10">
           <div className="">
             <h2 className="mt-6 text-3xl font-bold text-gray-900">Add User</h2>
-            <p className="mt-2 text-sm text-gray-500">
-              Add Admin, HR, or User
-            </p>
+            <p className="mt-2 text-sm text-gray-500">Add Admin, HR, or User</p>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {/* name */}
