@@ -35,13 +35,15 @@
 5. **Update user Data:**
     - Admin and HR can update(edit) all user data.
 
+## N.B: Here, all registered users are treated as normal users. They are not able to do admin-related work(e.g., add user, add admin, add HR)
+
 ## Upcoming Features:
 1. **User create from file data**
-    - Users will be created when we upload a file, and then according to file data one or multiple users created
+    - Users will be created when we upload a file, and then according to file data one or multiple users created automatically.
 
     
 2. **Checkout and payment method integration:**
-    - Users can order recipes and make payments (Using SSLCommmerz or Stripe).
+    - Users can order recipes and make payments (Using SSLCommerz or Stripe).
 
 ## Technologies Used:
    - Next JS (14.0.4)
