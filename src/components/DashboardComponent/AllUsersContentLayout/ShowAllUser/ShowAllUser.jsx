@@ -127,7 +127,7 @@ const ShowAllUser = () => {
           </div>
         </div>
 
-        {filteredUsers && filteredUsers.length > 0 ? (
+        {filteredUsers && filteredUsers?.length > 0 ? (
           <table className="min-w-full">
             <thead>
               <tr className="text-left">
@@ -178,14 +178,28 @@ const ShowAllUser = () => {
 
                   <td className="text-xs lg:text-sm font-semibold p-5 flex">
                     <Link
-                      href={`/dashboard/adduser?userId=${user._id}`}
-                      className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600 block md:inline-block"
+                      href={
+                        index === 0
+                          ? "#"
+                          : `/dashboard/adduser?userId=${user._id}`
+                      }
+                      className={`text-white px-2 py-1 rounded mr-2 block md:inline-block ${
+                        index === 0
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-yellow-500 hover:bg-yellow-600"
+                      }`}
                     >
                       Edit
                     </Link>
+
                     <button
-                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 block md:inline-block"
+                      className={` text-white px-2 py-1 rounded block md:inline-block ${
+                        index === 0
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-red-500 hover:bg-red-600"
+                      }`}
                       onClick={() => handleDeleteUser(user._id)}
+                      disabled={index === 0}
                     >
                       Delete
                     </button>
