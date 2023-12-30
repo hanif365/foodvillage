@@ -46,15 +46,12 @@ const ShowAllUser = () => {
 
   const handleDeleteUser = async (userId) => {
     try {
-      const response = await fetch(
-        `/api/users?userId=${userId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/users?userId=${userId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.ok) {
         console.log(`User deleted successfully`);
@@ -91,7 +88,6 @@ const ShowAllUser = () => {
     <div className="w-full">
       <div className="bg-white pt-5 pb-9 rounded-xl">
         <div className="flex justify-between mx-5 mb-3">
-        <ToastContainer />
           <h4 className="text-base lg:text-xl 2xl:text-2xl font-bold">
             All Users
           </h4>
@@ -202,7 +198,9 @@ const ShowAllUser = () => {
           <p className="text-center text-lg font-semibold">No user Found!</p>
         )}
       </div>
-      {/* <ToastContainer /> */}
+      <div>
+        <ToastContainer />
+      </div>
     </div>
   );
 };

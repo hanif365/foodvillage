@@ -5,7 +5,7 @@ import "./Header.css";
 
 const Header = () => {
   return (
-    <header className="py-28 2xl:py-64 bg-[url('/bg_hero.jpg')] bg-no-repeat bg-cover">
+    <header className="py-28 2xl:pt-40 2xl:pb-96 bg-[url('/bg_hero.jpg')] bg-no-repeat bg-cover">
       <div className="mx-auto px-5 py-16 md:px-10 md:pt-24 lg:pt-32">
         <div className="mx-auto mb-0 w-full max-w-4xl 2xl:max-w-6xl text-center md:mb-12 lg:mb-16">
           <h1 className="text-white mb-8 text-4xl 2xl:text-8xl font-bold md:text-7xl">
