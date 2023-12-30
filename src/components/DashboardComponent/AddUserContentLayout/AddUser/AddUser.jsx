@@ -59,7 +59,7 @@ const AddUser = () => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/user?userId=${userId}`
+          `/api/user?userId=${userId}`
         );
         if (response.ok) {
           const userData = await response.json();
@@ -120,8 +120,8 @@ const AddUser = () => {
     setLoading(true);
 
     const apiUrl = userId
-      ? `http://localhost:3000/api/users?userId=${userId}`
-      : "http://localhost:3000/api/auth/register";
+      ? `/api/users?userId=${userId}`
+      : "/api/auth/register";
 
     try {
       console.log(formData);

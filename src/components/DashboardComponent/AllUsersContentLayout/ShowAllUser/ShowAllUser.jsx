@@ -15,7 +15,7 @@ const ShowAllUser = () => {
 
   const fetchAllUserData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/users`);
+      const response = await fetch(`/api/users`);
       if (!response.ok) {
         return;
       }
@@ -47,7 +47,7 @@ const ShowAllUser = () => {
   const handleDeleteUser = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users?userId=${userId}`,
+        `/api/users?userId=${userId}`,
         {
           method: "DELETE",
           headers: {

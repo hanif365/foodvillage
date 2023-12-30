@@ -42,7 +42,7 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/user?userEmail=${userEmail}`);
+        const response = await fetch(`/api/user?userEmail=${userEmail}`);
         if (!response.ok) {
           throw new Error('Failed to fetch user data');
         }
