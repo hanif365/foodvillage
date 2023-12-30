@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #d8d8d8;
+    border-radius: 40px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+
+  .confirmSeats_btn span:first-child {
+    transform: translateX(-101%);
+    transition: transform 0.3s ease-in;
+  }
+  .confirmSeats_btn:hover span {
+    transform: translateX(0);
+  }
+  /* If we need horizontally moved then just use X instead of Y and viceversa*/
+  
+  
