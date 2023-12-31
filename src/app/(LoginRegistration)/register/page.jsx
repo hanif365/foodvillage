@@ -79,19 +79,12 @@ const Register = () => {
     }));
   };
 
-  const handleRoleChange = (e) => {
-    const { value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      roles: [value],
-    }));
-  };
-
-  // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-  // // Function to check if the email is valid
-  // const isEmailValid = (email) => {
-  //     return emailRegex.test(email);
+  // const handleRoleChange = (e) => {
+  //   const { value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     roles: [value],
+  //   }));
   // };
 
   // Function to check if password and confirmPassword match
@@ -314,7 +307,7 @@ const Register = () => {
               </div>
 
               {/* Role */}
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <select
                   name="role"
                   value={formData.roles}
@@ -328,7 +321,7 @@ const Register = () => {
                   <option value="admin">Admin</option>
                   <option value="HR">HR</option>
                 </select>
-              </div>
+              </div> */}
 
               {/* Address */}
               <div className="relative">
