@@ -53,7 +53,7 @@ const Login = () => {
   //   router?.push("/");
   // }
 
-  console.log(session.status);
+  // console.log(session.status);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

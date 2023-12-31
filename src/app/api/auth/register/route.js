@@ -26,7 +26,7 @@ export const POST = async (request) => {
 
   const hashedPassword = await bcrypt.hash(password, 5);
 
-  console.log("Role fron Backend: ", roles);
+  // console.log("Role fron Backend: ", roles);
 
   const userRoles = roles ? roles[0] === 'user' ? ['user'] : roles.concat('user') : ['user'];
 

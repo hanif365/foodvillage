@@ -31,10 +31,10 @@ const Sidebar = () => {
   const pathName = usePathname();
   const router = useRouter();
   const { theme, setTheme } = useTheme();
-  console.log(theme);
+  // console.log(theme);
   const session = useSession();
   const userEmail = session?.data?.user?.email
-  console.log(userEmail);
+  // console.log(userEmail);
 
   const [userRole, setUserRole] = useState(false);
 
@@ -48,8 +48,8 @@ const Sidebar = () => {
         }
 
         const data = await response.json();
-        console.log("User Data: ", data);
-        console.log("User Role: ", data.roles[0]);
+        // console.log("User Data: ", data);
+        // console.log("User Role: ", data.roles[0]);
         setUserRole(data.roles[0]);
         // setUserData(data);
       } catch (error) {
@@ -61,7 +61,7 @@ const Sidebar = () => {
   }, [userEmail]);
 
 
-  console.log("User Role from outside: ", userRole);
+  // console.log("User Role from outside: ", userRole);
 
   const menuItems = [
     {

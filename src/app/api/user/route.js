@@ -11,8 +11,8 @@ export const GET = async (req) => {
       const userId = queryParams.get("userId");
       const userEmail = queryParams.get("userEmail");
   
-      console.log("UserId:", userId);
-      console.log("User Email",userEmail);
+      // console.log("UserId:", userId);
+      // console.log("User Email",userEmail);
 
       let user;
 
@@ -24,7 +24,7 @@ export const GET = async (req) => {
       }
   
       
-      console.log("User: ", user);
+      // console.log("User: ", user);
       return new NextResponse(JSON.stringify(user), {
         status: 200,
         headers: {

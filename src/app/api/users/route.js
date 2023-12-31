@@ -28,7 +28,7 @@ export const PATCH = async (req) => {
     const userId = queryParams.get("userId");
     const { name, email, phoneNumber, nid, address } = await req.json();
 
-    console.log("ID: ", userId);
+    // console.log("ID: ", userId);
 
     // Find the user by ID
     const user = await User.findById(userId);

@@ -27,11 +27,11 @@ const UserProfile = () => {
         }
 
         const data = await response.json();
-        console.log("User Data: ", data);
-        console.log("User Role: ", data.roles[0]);
+        // console.log("User Data: ", data);
+        // console.log("User Role: ", data.roles[0]);
         setUserRole(data.roles[0]);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 

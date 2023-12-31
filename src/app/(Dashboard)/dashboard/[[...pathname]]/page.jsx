@@ -36,7 +36,7 @@ const Dashboard = ({ params }) => {
       break;
 
     case "myprofile":
-      content = <MyProfileContentLayout />
+      content = <MyProfileContentLayout />;
       break;
 
     case "myreview":

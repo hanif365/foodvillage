@@ -10,30 +10,50 @@ import "./page.css";
 import PhotoGalleries from "../../../data/photoGallery.json";
 import { useSession } from "next-auth/react";
 
+const initialData = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  phoneNumber: "",
+  nid: "",
+  dateOfBirth: "",
+  address: "",
+  roles: [],
+};
+
 const Register = () => {
   const session = useSession();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phoneNumber: "",
-    nid: "",
-    dateOfBirth: "",
-    address: "",
-    roles: [],
-  });
+  const [formData, setFormData] = useState(initialData);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
-  console.log(formData);
+  // console.log(formData);
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   // Function to check if the email is valid
   const isEmailValid = (email) => {
     return emailRegex.test(email);
+  };
+
+  // Function to check if the NID is valid
+  const isNIDValid = (nid) => {
+    // console.log(nid.length);
+    if (nid.length === 10 || nid.length === 13 || nid.length === 17) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  // Function to check if the Phone Number is valid
+  const isPhoneNumberValid = (phoneNum) => {
+    if (phoneNum.length === 11) {
+      return true;
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -50,8 +70,24 @@ const Register = () => {
       return;
     }
 
+    if (
+      formData.nid.length !== 10 &&
+      formData.nid.length !== 13 &&
+      formData.nid.length !== 17
+    ) {
+      setError("NID not valid. NID should have 10, 13, or 17 digits");
+      return;
+    }
+
+    if (formData.phoneNumber.length !== 11) {
+      setError("Phone Number Not Valid. Phone Number should have 11 digits");
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      console.log(formData);
+      // console.log(formData);
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
@@ -61,13 +97,17 @@ const Register = () => {
       });
 
       if (res.status === 201) {
+        setFormData(initialData);
+        setLoading(false);
         router.push("/login?success=Account has been created");
       } else {
         const data = await res.json();
+        setLoading(false);
         setError(data.message || "Something went wrong!");
       }
     } catch (err) {
-      setError("Something went wrong!!");
+      setError("Something went wrong!");
+      setLoading(false);
     }
   };
 
@@ -78,14 +118,6 @@ const Register = () => {
       [name]: value,
     }));
   };
-
-  // const handleRoleChange = (e) => {
-  //   const { value } = e.target;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     roles: [value],
-  //   }));
-  // };
 
   // Function to check if password and confirmPassword match
   const doPasswordsMatch = () => {
@@ -110,7 +142,7 @@ const Register = () => {
 
   if (session.status === "loading") {
     return (
-      <div className="mt-40">
+      <div className="mt-40 min-h-screen">
         <Image
           src="/loading.gif"
           alt="Loading Image"
@@ -267,11 +299,34 @@ const Register = () => {
                 />
               </div>
 
-              {/* Phone number */}
+              {/* New Phone Number */}
               <div className="relative">
+                {isPhoneNumberValid(formData.phoneNumber) && (
+                  <div className="absolute right-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-10 w-8 text-green-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                )}
+
                 <input
-                  className="w-full text-base px-4 py-2 border-b border-gray-300 focus:outline-none rounded-2xl focus:border-[#4C50E8]"
-                  type="text"
+                  className={`w-full text-base px-4 py-2 border-b border-gray-300 focus:outline-none rounded-2xl ${
+                    isPhoneNumberValid(formData.phoneNumber)
+                      ? "focus:border-[#4C50E8]"
+                      : "focus:border-red-500"
+                  }`}
+                  type="number"
                   name="phoneNumber"
                   placeholder="Phone Number"
                   value={formData.phoneNumber}
@@ -280,11 +335,34 @@ const Register = () => {
                 />
               </div>
 
-              {/* NID number */}
+              {/* New NID number */}
               <div className="relative">
+                {isNIDValid(formData.nid) && (
+                  <div className="absolute right-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-10 w-8 text-green-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                )}
+
                 <input
-                  className="w-full text-base px-4 py-2 border-b border-gray-300 focus:outline-none rounded-2xl focus:border-[#4C50E8]"
-                  type="text"
+                  className={`w-full text-base px-4 py-2 border-b border-gray-300 focus:outline-none rounded-2xl ${
+                    isNIDValid(formData.nid)
+                      ? "focus:border-[#4C50E8]"
+                      : "focus:border-red-500"
+                  }`}
+                  type="number"
                   name="nid"
                   placeholder="NID Number"
                   value={formData.nid}
@@ -306,23 +384,6 @@ const Register = () => {
                 />
               </div>
 
-              {/* Role */}
-              {/* <div className="mb-4">
-                <select
-                  name="role"
-                  value={formData.roles}
-                  onChange={handleRoleChange}
-                  className="mt-1 p-2 w-full border rounded-md"
-                >
-                  <option value="" disabled>
-                    Select your role
-                  </option>
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                  <option value="HR">HR</option>
-                </select>
-              </div> */}
-
               {/* Address */}
               <div className="relative">
                 <textarea
@@ -335,9 +396,24 @@ const Register = () => {
                   required
                 />
               </div>
+
+              {/* Show Loading */}
+              {loading && (
+                <p className="">
+                  <Image
+                    src="/loading.gif"
+                    alt="Loading Image"
+                    width={30}
+                    height={30}
+                    className="mx-auto"
+                  />
+                </p>
+              )}
+
               <div>
                 <button
                   type="submit"
+                  disabled={loading}
                   className="text-[14px] lg:text-[16px] register_btn w-full flex justify-center items-center px-10 py-8 relative border uppercase font-semibold tracking-wider leading-none overflow-hidden bg-[#070B39] rounded-md text-white cursor-pointer"
                 >
                   <span className="absolute inset-0 bg-yellow-400 rounded"></span>

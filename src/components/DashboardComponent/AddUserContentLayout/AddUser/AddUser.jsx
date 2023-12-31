@@ -28,8 +28,8 @@ const AddUser = () => {
   let userId = useSearchParams().get("userId");
   const router = useRouter();
 
-  console.log(formData);
-  console.log(userId);
+  // console.log(formData);
+  // console.log(userId);
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -40,7 +40,7 @@ const AddUser = () => {
 
   // Function to check if the NID is valid
   const isNIDValid = (nid) => {
-    console.log(nid.length);
+    // console.log(nid.length);
     if (nid.length === 10 || nid.length === 13 || nid.length === 17) {
       return true;
     } else {
@@ -61,7 +61,7 @@ const AddUser = () => {
         const response = await fetch(`/api/user?userId=${userId}`);
         if (response.ok) {
           const userData = await response.json();
-          console.log("Fetched user data", userData);
+          // console.log("Fetched user data", userData);
 
           // Pre-fill the form fields with fetched data
           // setFormData(userData);
@@ -74,10 +74,10 @@ const AddUser = () => {
             address: userData.address || "",
           }));
         } else {
-          console.error("Failed to fetch user data");
+          // console.error("Failed to fetch user data");
         }
       } catch (error) {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       }
     };
 
@@ -122,7 +122,7 @@ const AddUser = () => {
       : "/api/auth/register";
 
     try {
-      console.log(formData);
+      // console.log(formData);
       const res = await fetch(apiUrl, {
         method: userId ? "PATCH" : "POST",
         headers: {
@@ -131,7 +131,7 @@ const AddUser = () => {
         body: JSON.stringify(formData),
       });
 
-      console.log("RES:", res);
+      // console.log("RES:", res);
 
       if (res.ok) {
         setFormData(initialData);
@@ -207,15 +207,19 @@ const AddUser = () => {
     });
   };
 
-  console.log(formData.roles[0]);
+  // console.log(formData.roles[0]);
 
   return (
     <div className="">
       <div className="flex flex-col sm:flex-row pt-5 pb-9 rounded-xl items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-white">
         <div className="w-full space-y-8 mx-10">
           <div className="">
-            <h2 className="mt-6 text-3xl font-bold text-gray-900">{userId ? "Update" : "Add"} User</h2>
-            <p className="mt-2 text-sm text-gray-500">{userId ? "Update" : "Add"} Admin, HR, or User</p>
+            <h2 className="mt-6 text-3xl font-bold text-gray-900">
+              {userId ? "Update" : "Add"} User
+            </h2>
+            <p className="mt-2 text-sm text-gray-500">
+              {userId ? "Update" : "Add"} Admin, HR, or User
+            </p>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {/* name */}

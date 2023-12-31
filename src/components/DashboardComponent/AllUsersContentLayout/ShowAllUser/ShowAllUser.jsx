@@ -24,7 +24,7 @@ const ShowAllUser = () => {
       setAllUsers(result);
       filterUsersByRole(selectedRole, result);
     } catch (error) {
-      console.error("Error fetching data:", error.message);
+      // console.error("Error fetching data:", error.message);
     }
   };
 
@@ -54,7 +54,7 @@ const ShowAllUser = () => {
       });
 
       if (response.ok) {
-        console.log(`User deleted successfully`);
+        // console.log(`User deleted successfully`);
         setAllUsers((prevUsers) =>
           prevUsers.filter((user) => user._id !== userId)
         );
@@ -64,10 +64,10 @@ const ShowAllUser = () => {
         );
         showToast(`User deleted successfully!`, "success");
       } else {
-        console.error("Failed to delete user");
+        // console.error("Failed to delete user");
       }
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     }
   };
 

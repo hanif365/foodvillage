@@ -13,7 +13,7 @@ function Navbar() {
   const session = useSession();
   const pathname = usePathname();
 
-  console.log(session?.data?.user);
+  // console.log(session?.data?.user);
   if (!pathname.startsWith("/dashboard")) {
     return (
       <div>
